@@ -7,8 +7,9 @@ let server;
 (async () => {
   try {
     await Database.authenticate();
-    await Database.sync({ alter: true });
+    await Database.sync({ force: true, alter: true });
     console.log("Database is up");
+    console.log(config);
     server = app.listen(config.NODE_APP_PORT, () => {
       console.log(`Server is running on port ${config.NODE_APP_PORT}`);
     });

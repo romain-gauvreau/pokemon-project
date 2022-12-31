@@ -1,5 +1,32 @@
 components:
   schemas:
+    Trainer:
+      type: object
+      properties:
+        id:
+          type: integer
+        login:
+          type: string
+        password:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        age:
+          type: integer
+        role:
+          type: string
+          enum: [ trainer, admin ]
+      example:
+        id: 12
+        login: trainer12
+        password: 123456abcdef
+        firstName: John
+        lastName: Smith
+        age: 30
+        role: trainer
+
     Token:
       type: object
       properties:
@@ -27,6 +54,36 @@ components:
           type: number
         message:
           type: string
+
+  responses:
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 401
+            message: Please authenticate
+    Forbidden:
+      description: Forbidden
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 403
+            message: Forbidden
+    NotFound:
+      description: Not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 404
+            message: Not found
+
 
   securitySchemes:
     bearerAuth:
