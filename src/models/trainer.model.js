@@ -1,4 +1,5 @@
 import { DataTypes, Model } from "sequelize";
+import bcrypt from "bcrypt";
 import Database from "../config/database.js";
 
 class Trainer extends Model {}
@@ -27,8 +28,8 @@ Trainer.init(
       type: DataTypes.STRING(),
       allowNull: false,
     },
-    age: {
-      type: DataTypes.INTEGER,
+    birthdate: {
+      type: DataTypes.DATE,
       allowNull: false,
     },
     role: {
@@ -43,5 +44,9 @@ Trainer.init(
     timestamps: true,
   }
 );
+
+Trainer.beforeCreate(async (trainer, options) => {
+  trainer.password = await bcrypt.hash(trainer.password, 8);
+});
 
 export default Trainer;

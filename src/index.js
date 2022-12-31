@@ -1,14 +1,18 @@
 import Database from "./config/database.js";
 import app from "./app.js";
 import config from "./config/config.js";
+import { trainerService } from "./services/index.js";
 
 let server;
 
 (async () => {
   try {
     await Database.authenticate();
-    await Database.sync({ force: true, alter: true });
+    await Database.sync({ alter: true });
     console.log("Database is up");
+
+    // Add default user to database
+    await trainerService.createDefaultUser();
     console.log(config);
     server = app.listen(config.NODE_APP_PORT, () => {
       console.log(`Server is running on port ${config.NODE_APP_PORT}`);
