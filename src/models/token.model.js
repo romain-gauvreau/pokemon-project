@@ -32,6 +32,9 @@ Token.init(
   }
 );
 
-Token.Trainer = Token.belongsTo(Trainer);
+Token.Trainer = Token.belongsTo(Trainer, {
+  onDelete: "CASCADE",
+  onUpdate: "CASCADE",
+});
 
 export default Token;
