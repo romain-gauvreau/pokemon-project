@@ -5,7 +5,7 @@ components:
       properties:
         id:
           type: integer
-        login:
+        username:
           type: string
         password:
           type: string
@@ -13,19 +13,21 @@ components:
           type: string
         lastName:
           type: string
-        age:
-          type: integer
+        birthdate:
+          type: date
         role:
           type: string
           enum: [ trainer, admin ]
       example:
         id: 12
-        login: trainer12
-        password: 123456abcdef
         firstName: John
         lastName: Smith
-        age: 30
+        username: trainer12
+        password: $2b$08$76pV0gOKWq9yKIcSyanCtLYnRANie5pX2vAB8qROSU7ohHDjNESTb
+        birthdate: 1985-10-08T00:00:00.000Z
         role: trainer
+        createdAt: 2023-01-01T12:26:30.000Z
+        updatedAt: 2023-01-01T12:26:30.000Z
 
     Token:
       type: object

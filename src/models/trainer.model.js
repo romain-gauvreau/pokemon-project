@@ -2,7 +2,11 @@ import { DataTypes, Model } from "sequelize";
 import bcrypt from "bcrypt";
 import Database from "../config/database.js";
 
-class Trainer extends Model {}
+class Trainer extends Model {
+  async isPasswordMatch(password) {
+    return bcrypt.compare(password, this.password);
+  }
+}
 
 Trainer.init(
   {
@@ -20,7 +24,7 @@ Trainer.init(
       type: DataTypes.STRING(50),
       allowNull: false,
     },
-    login: {
+    username: {
       type: DataTypes.STRING(150),
       allowNull: false,
     },

@@ -12,7 +12,7 @@ let server;
     console.log("Database is up");
 
     // Add default user to database
-    await trainerService.createDefaultUser();
+    await trainerService.createDefaultTrainer();
     console.log(config);
     server = app.listen(config.NODE_APP_PORT, () => {
       console.log(`Server is running on port ${config.NODE_APP_PORT}`);

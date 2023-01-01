@@ -3,22 +3,21 @@ import { Trainer } from "../models/index.js";
 async function getTrainerById(id) {
   return Trainer.findByPk(id);
 }
-async function getTrainerByLogin(login) {
-  return Trainer.findOne({ where: { login } });
+async function getTrainerByUsername(username) {
+  return Trainer.findOne({ where: { username } });
 }
 
-async function createDefaultUser() {
-  const trainer = await getTrainerByLogin("leopkmn");
-  console.log(trainer);
+async function createDefaultTrainer() {
+  const trainer = await getTrainerByUsername("leopkmn");
   if (!trainer) {
     await Trainer.create({
       firstName: "Léo",
       lastName: "Pokemaniac",
-      login: "leopkmn",
+      username: "leopkmn",
       password: "cynthia",
       birthdate: new Date("1999-10-08"),
       role: "admin",
     });
   }
 }
-export { getTrainerById, getTrainerByLogin, createDefaultUser };
+export { getTrainerById, getTrainerByUsername, createDefaultTrainer };
