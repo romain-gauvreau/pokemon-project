@@ -3,8 +3,13 @@ import { Trainer } from "../models/index.js";
 import ApiError from "../utils/ApiError.js";
 
 async function getTrainerById(id) {
-  return Trainer.findByPk(id);
+  return Trainer.findByPk(id, { attributes: { exclude: ["password"] } });
 }
+
+async function deleteTrainerById(id) {
+  return Trainer.destroy({ where: { id } });
+}
+
 async function getTrainerByUsername(username) {
   return Trainer.findOne({ where: { username } });
 }
@@ -32,6 +37,7 @@ async function createTrainer(trainerBody) {
 }
 export {
   getTrainerById,
+  deleteTrainerById,
   getTrainerByUsername,
   createDefaultTrainer,
   createTrainer,

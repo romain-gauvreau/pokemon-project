@@ -11,4 +11,9 @@ const getTrainer = catchAsync(async (req, res) => {
   res.send(trainer);
 });
 
-export { getTrainer };
+const deleteTrainer = catchAsync(async (req, res) => {
+  await trainerService.deleteTrainerById(req.params.trainerId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+
+export { getTrainer, deleteTrainer };

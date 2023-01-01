@@ -1,3 +1,4 @@
 import * as authValidation from "./auth.validation.js";
+import * as trainerValidation from "./trainer.validation.js";
 
-export { authValidation };
+export { trainerValidation, authValidation };
