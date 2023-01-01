@@ -6,10 +6,24 @@ const getTrainer = {
   }),
 };
 
+const updateTrainer = {
+  params: Joi.object({
+    trainerId: Joi.string().required(),
+  }),
+  body: Joi.object({
+    username: Joi.string(),
+    password: Joi.string(),
+    firstName: Joi.string(),
+    lastName: Joi.string(),
+    role: Joi.string(),
+    birthdate: Joi.date(),
+  }),
+};
+
 const deleteTrainer = {
   params: Joi.object({
     trainerId: Joi.string().required(),
   }),
 };
 
-export { getTrainer, deleteTrainer };
+export { getTrainer, updateTrainer, deleteTrainer };

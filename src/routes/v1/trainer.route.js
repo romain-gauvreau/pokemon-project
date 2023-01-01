@@ -13,6 +13,11 @@ trainerRouter
     validate(trainerValidation.getTrainer),
     trainerController.getTrainer
   )
+  .patch(
+    auth("manageTrainers"),
+    validate(trainerValidation.updateTrainer),
+    trainerController.updateTrainer
+  )
   .delete(
     auth("manageTrainers"),
     validate(trainerValidation.deleteTrainer),
@@ -28,6 +33,8 @@ export default trainerRouter;
  *     summary: Get a trainer
  *     description: Fetch trainer information by id
  *     tags: [Trainers]
+ *     security:
+ *       - bearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -35,8 +42,6 @@ export default trainerRouter;
  *         schema:
  *           type: string
  *         description: Trainer id
- *     security:
- *       - bearerAuth: []
  *     responses:
  *       "200":
  *         description: OK
@@ -46,8 +51,68 @@ export default trainerRouter;
  *                $ref: '#/components/schemas/Trainer'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
+ *
+ *   patch:
+ *     summary: Update a trainer
+ *     description: Logged in trainers can only update their own information. Only admins can update other trainers and roles.
+ *     tags: [Trainers]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Trainer id
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *               firstName:
+ *                 type: string
+ *               lastName:
+ *                 type: string
+ *               birthdate:
+ *                 type: date
+ *             example:
+ *               username: login123
+ *               password: password1
+ *               firstName: John
+ *               lastName: Doe
+ *               birthdate: 1990-01-01
+ *               role: admin
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Trainer'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateUsername'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ *
  *   delete:
  *     summary: Delete a trainer
  *     description: Logged in trainers can delete only themselves. Only admins can delete other trainers.
@@ -64,6 +129,8 @@ export default trainerRouter;
  *     responses:
  *       "204":
  *         description: No content
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
  */

@@ -53,4 +53,10 @@ Trainer.beforeCreate(async (trainer, options) => {
   trainer.password = await bcrypt.hash(trainer.password, 8);
 });
 
+Trainer.beforeUpdate(async (trainer, options) => {
+  if (trainer.changed("password")) {
+    trainer.password = await bcrypt.hash(trainer.password, 8);
+  }
+});
+
 export default Trainer;

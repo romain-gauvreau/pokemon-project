@@ -11,9 +11,17 @@ const getTrainer = catchAsync(async (req, res) => {
   res.send(trainer);
 });
 
+const updateTrainer = catchAsync(async (req, res) => {
+  const trainer = await trainerService.updateTrainerById(
+    req.params.trainerId,
+    req.body
+  );
+  res.send(trainer);
+});
+
 const deleteTrainer = catchAsync(async (req, res) => {
   await trainerService.deleteTrainerById(req.params.trainerId);
   res.status(httpStatus.NO_CONTENT).send();
 });
 
-export { getTrainer, deleteTrainer };
+export { getTrainer, deleteTrainer, updateTrainer };
