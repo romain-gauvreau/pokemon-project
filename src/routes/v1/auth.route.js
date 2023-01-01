@@ -5,6 +5,11 @@ import validate from "../../middlewares/validate.js";
 
 const authRouter = Router();
 
+authRouter.post(
+  "/register",
+  validate(authValidation.register),
+  authController.register
+);
 authRouter.post("/login", validate(authValidation.login), authController.login);
 authRouter.post(
   "/logout",
@@ -25,6 +30,56 @@ export default authRouter;
  *   name: Auth
  *   description: Authentication
  */
+
+/**
+ * @swagger
+ * /auth/register:
+ *   post:
+ *     summary: Register as trainer
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - username
+ *               - password
+ *               - firstName
+ *               - lastName
+ *               - birthDate
+ *             properties:
+ *               name:
+ *                 type: string
+ *               username:
+ *                 type: string
+ *                 description: must be unique
+ *               password:
+ *                 type: string
+ *                 format: password
+ *             example:
+ *               username: login123
+ *               password: password1
+ *               firstName: John
+ *               lastName: Doe
+ *               birthdate: 1990-01-01
+ *     responses:
+ *       "201":
+ *         description: Created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/Trainer'
+ *                 tokens:
+ *                   $ref: '#/components/schemas/AuthTokens'
+ *       "400":
+ *         $ref: '#/components/responses/DuplicateUsername'
+ */
+
 /**
  * @swagger
  * /auth/login:

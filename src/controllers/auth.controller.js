@@ -1,6 +1,16 @@
 import httpStatus from "http-status";
 import catchAsync from "../utils/catchAsync.js";
-import { authService, tokenService } from "../services/index.js";
+import {
+  authService,
+  tokenService,
+  trainerService,
+} from "../services/index.js";
+
+const register = catchAsync(async (req, res) => {
+  const trainer = await trainerService.createTrainer(req.body);
+  const tokens = await tokenService.generateAuthTokens(trainer);
+  res.status(httpStatus.CREATED).send({ trainer, tokens });
+});
 
 const login = catchAsync(async (req, res) => {
   const { username, password } = req.body;
@@ -22,4 +32,4 @@ const refreshTokens = catchAsync(async (req, res) => {
   res.send({ ...tokens });
 });
 
-export { login, logout, refreshTokens };
+export { login, logout, refreshTokens, register };

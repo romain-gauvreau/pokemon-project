@@ -85,6 +85,15 @@ components:
           example:
             code: 404
             message: Not found
+    DuplicateUsername:
+      description: Username already taken
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Username already taken
 
 
   securitySchemes:

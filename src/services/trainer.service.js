@@ -1,4 +1,6 @@
+import httpStatus from "http-status";
 import { Trainer } from "../models/index.js";
+import ApiError from "../utils/ApiError.js";
 
 async function getTrainerById(id) {
   return Trainer.findByPk(id);
@@ -20,4 +22,17 @@ async function createDefaultTrainer() {
     });
   }
 }
-export { getTrainerById, getTrainerByUsername, createDefaultTrainer };
+
+async function createTrainer(trainerBody) {
+  const isUsernameTaken = await getTrainerByUsername(trainerBody.username);
+  if (isUsernameTaken) {
+    throw new ApiError(httpStatus.BAD_REQUEST, "Username already taken");
+  }
+  return Trainer.create(trainerBody);
+}
+export {
+  getTrainerById,
+  getTrainerByUsername,
+  createDefaultTrainer,
+  createTrainer,
+};
