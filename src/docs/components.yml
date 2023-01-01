@@ -28,7 +28,39 @@ components:
         role: trainer
         createdAt: 2023-01-01T12:26:30.000Z
         updatedAt: 2023-01-01T12:26:30.000Z
-
+    Pokemon:
+      type: object
+      properties:
+        id:
+          type: integer
+        species:
+          type: string
+        name:
+          type: string
+        level:
+          type: integer
+        gender:
+          type: string
+        height:
+          type: integer
+        weight:
+          type: integer
+        isChromatic:
+          type: boolean
+        trainerId:
+          type: integer
+      example:
+        id: 1
+        species: pikachu
+        name: pikachu_lvl12
+        level: 12
+        gender: unknown
+        height: 140
+        weight: 24
+        isChromatic: false
+        createdAt: 2023-01-01T22:24:51.000Z
+        updatedAt: 2023-01-01T22:24:51.000Z
+        trainerId: 4
     Token:
       type: object
       properties:
@@ -94,6 +126,15 @@ components:
           example:
             code: 400
             message: Username already taken
+    TrainerNotFound:
+      description: Trainer not found
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+          example:
+            code: 400
+            message: Trainer not found
 
 
   securitySchemes:
