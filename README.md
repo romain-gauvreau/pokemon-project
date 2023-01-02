@@ -86,7 +86,7 @@ src\
 
 ## API documentation
 
-The API documentation is available at the following address: http://localhost:8080/api-docs. This documentation is
+The API documentation is available at the following address: http://localhost:8080/v1/api-docs/. This documentation is
 generated using the [swagger](https://swagger.io/) definitions written as comments in the route files.
 
 A default admin user is created when the application starts. The credentials are:
