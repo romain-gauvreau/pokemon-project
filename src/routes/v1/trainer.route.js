@@ -32,6 +32,14 @@ trainerRouter
     trainerController.getTrainerPokemons
   );
 
+trainerRouter
+  .route("/:trainerId/trades")
+  .get(
+    auth("getTrainers"),
+    validate(trainerValidation.getTrainerTrades),
+    trainerController.getTrainerTrades
+  );
+
 export default trainerRouter;
 
 /**
@@ -194,6 +202,37 @@ export default trainerRouter;
  *                    type: array
  *                    items:
  *                      $ref: '#/components/schemas/Pokemon'
+ *      "401":
+ *        $ref: '#/components/responses/Unauthorized'
+ */
+
+/**
+ * @swagger /trainers/{id}/trades:
+ *   get:
+ *     summary: Get a trainer's trades
+ *     description: Fetch trainer's trades by trainer id
+ *     tags: [Trainers]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Trainer id
+ *     responses:
+ *      "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: object
+ *                properties:
+ *                  trades:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Trade'
  *      "401":
  *        $ref: '#/components/responses/Unauthorized'
  */

@@ -7,4 +7,13 @@ const createTrade = {
   }),
 };
 
-export { createTrade };
+const updateTradeStatus = {
+  params: Joi.object({
+    tradeId: Joi.string().required(),
+  }),
+  body: Joi.object({
+    status: Joi.string().required().equal("pending", "accepted", "rejected"),
+  }),
+};
+
+export { createTrade, updateTradeStatus };

@@ -1,4 +1,5 @@
 import httpStatus from "http-status";
+import { Op } from "sequelize";
 import ApiError from "../utils/ApiError.js";
 import { Trade } from "../models/index.js";
 
@@ -10,4 +11,14 @@ async function createTrade(tradeBody) {
   });
 }
 
-export { createTrade };
+async function getTradeById(tradeId) {
+  return Trade.findByPk(tradeId);
+}
+
+async function getTradesByTrainerId(trainerId) {
+  return Trade.findAll({
+    where: { [Op.or]: [{ buyerId: trainerId }, { sellerId: trainerId }] },
+  });
+}
+
+export { createTrade, getTradeById, getTradesByTrainerId };

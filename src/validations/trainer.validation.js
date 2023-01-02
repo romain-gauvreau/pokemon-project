@@ -16,6 +16,12 @@ const getTrainerPokemons = {
   }),
 };
 
+const getTrainerTrades = {
+  params: Joi.object({
+    trainerId: Joi.string().required(),
+  }),
+};
+
 const updateTrainer = {
   params: Joi.object({
     trainerId: Joi.string().required(),
@@ -36,4 +42,10 @@ const deleteTrainer = {
   }),
 };
 
-export { getTrainer, getTrainerPokemons, updateTrainer, deleteTrainer };
+export {
+  getTrainer,
+  getTrainerPokemons,
+  getTrainerTrades,
+  updateTrainer,
+  deleteTrainer,
+};

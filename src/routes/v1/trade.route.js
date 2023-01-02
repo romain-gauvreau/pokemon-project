@@ -14,6 +14,14 @@ tradeRouter
     tradeController.createTrade
   );
 
+tradeRouter
+  .route("/:tradeId/status")
+  .patch(
+    auth("manageTrades"),
+    validate(tradeValidation.updateTradeStatus),
+    tradeController.updateTradeStatus
+  );
+
 export default tradeRouter;
 
 /**
@@ -56,6 +64,51 @@ export default tradeRouter;
  *           application/json:
  *             schema:
  *              $ref: '#/components/schemas/Trade'
+ *       "401":
+ *         $ref: '#/components/responses/Unauthorized'
+ *       "403":
+ *         $ref: '#/components/responses/Forbidden'
+ *       "404":
+ *         $ref: '#/components/responses/NotFound'
+ */
+
+/**
+ * @swagger
+ * /trades/{id}/status:
+ *   patch:
+ *     summary: Accept or reject a trade
+ *     description: Logged in trainers can accept or reject a trade only if they are involved in it.
+ *     tags: [Trades]
+ *     security:
+ *     - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Trade id
+ *     requestBody:
+ *       required: trues
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - status
+ *             properties:
+ *               status:
+ *                 type: string
+ *                 enum: [accepted, rejected, pending]
+ *             example:
+ *               status: accepted
+ *     responses:
+ *       "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                $ref: '#/components/schemas/Trade'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":

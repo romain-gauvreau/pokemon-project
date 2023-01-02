@@ -15,4 +15,26 @@ const createTrade = catchAsync(async (req, res) => {
   res.status(httpStatus.CREATED).send(trade);
 });
 
-export { createTrade };
+const updateTradeStatus = catchAsync(async (req, res) => {
+  const trade = await tradeService.getTradeById(req.params.tradeId);
+  if (!trade) {
+    throw new ApiError(httpStatus.NOT_FOUND, "Trade not found");
+  } else if (trade.buyerId !== req.user.id) {
+    throw new ApiError(
+      httpStatus.FORBIDDEN,
+      "You can't update a trade status that is not proposed to you"
+    );
+  } else if (trade.status !== "pending") {
+    throw new ApiError(httpStatus.FORBIDDEN, "Trade already accepted/rejected");
+  }
+  Object.assign(trade, req.body);
+  await trade.save();
+  if (trade.status === "accepted") {
+    await pokemonService.updatePokemonById(trade.pokemonId, {
+      trainerId: trade.buyerId,
+    });
+  }
+  res.send(trade);
+});
+
+export { createTrade, updateTradeStatus };

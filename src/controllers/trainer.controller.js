@@ -1,6 +1,10 @@
 import httpStatus from "http-status";
 import catchAsync from "../utils/catchAsync.js";
-import { trainerService, pokemonService } from "../services/index.js";
+import {
+  trainerService,
+  pokemonService,
+  tradeService,
+} from "../services/index.js";
 import ApiError from "../utils/ApiError.js";
 import { getPagination, getPagingData } from "../utils/pagination.js";
 
@@ -23,6 +27,11 @@ const getTrainerPokemons = catchAsync(async (req, res) => {
     });
 });
 
+const getTrainerTrades = catchAsync(async (req, res) => {
+  const trades = await tradeService.getTradesByTrainerId(req.params.trainerId);
+  res.send(trades);
+});
+
 const updateTrainer = catchAsync(async (req, res) => {
   const trainer = await trainerService.updateTrainerById(
     req.params.trainerId,
@@ -36,4 +45,10 @@ const deleteTrainer = catchAsync(async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 });
 
-export { getTrainer, getTrainerPokemons, deleteTrainer, updateTrainer };
+export {
+  getTrainer,
+  getTrainerPokemons,
+  getTrainerTrades,
+  deleteTrainer,
+  updateTrainer,
+};
