@@ -209,4 +209,8 @@ Linting is done using [ESLint](https://eslint.org/).
 
 In our app, ESLint is configured to follow the [Airbnb JavaScript style guide](https://github.com/airbnb/javascript/tree/master/packages/eslint-config-airbnb-base).
 
+## Contact
+
+Developed by [Romain Gauvreau](https://fr.linkedin.com/in/romain-gauvreau) during the NodeJS class presented by [Alex Cinq](https://fr.linkedin.com/in/alex-cinq-a454b6139).
+
 
