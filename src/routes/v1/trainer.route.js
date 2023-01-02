@@ -24,11 +24,24 @@ trainerRouter
     trainerController.deleteTrainer
   );
 
+trainerRouter
+  .route("/:trainerId/pokemons")
+  .get(
+    auth("getTrainers"),
+    validate(trainerValidation.getTrainerPokemons),
+    trainerController.getTrainerPokemons
+  );
+
 export default trainerRouter;
 
 /**
- * @swagger
- * /trainers/{id}:
+ * @swagger tags:
+ *   name: Trainers
+ *   description: Trainers management and retrieval
+ */
+
+/**
+ * @swagger /trainers/{id}:
  *   get:
  *     summary: Get a trainer
  *     description: Fetch trainer information by id
@@ -51,8 +64,6 @@ export default trainerRouter;
  *                $ref: '#/components/schemas/Trainer'
  *       "401":
  *         $ref: '#/components/responses/Unauthorized'
- *       "403":
- *         $ref: '#/components/responses/Forbidden'
  *       "404":
  *         $ref: '#/components/responses/NotFound'
  *
@@ -133,4 +144,56 @@ export default trainerRouter;
  *         $ref: '#/components/responses/Unauthorized'
  *       "403":
  *         $ref: '#/components/responses/Forbidden'
+ */
+
+/**
+ * @swagger /trainers/{id}/pokemons:
+ *   get:
+ *     summary: Get a trainer's pokemons
+ *     description: Fetch trainer's pokemons by trainer id (paginate)
+ *     tags: [Trainers]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: Trainer id
+ *       - in: query
+ *         name: page
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Page number
+ *       - in: query
+ *         name: size
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         description: Page size
+ *     responses:
+ *      "200":
+ *         description: OK
+ *         content:
+ *           application/json:
+ *             schema:
+ *                type: object
+ *                properties:
+ *                  totalItems:
+ *                    type: integer
+ *                    description: Total number of items
+ *                  totalPages:
+ *                    type: integer
+ *                    description: Total number of pages
+ *                  currentPage:
+ *                    type: integer
+ *                    description: Current page number
+ *                  pokemons:
+ *                    type: array
+ *                    items:
+ *                      $ref: '#/components/schemas/Pokemon'
+ *      "401":
+ *        $ref: '#/components/responses/Unauthorized'
  */

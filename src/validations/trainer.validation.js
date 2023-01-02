@@ -6,6 +6,16 @@ const getTrainer = {
   }),
 };
 
+const getTrainerPokemons = {
+  params: Joi.object({
+    trainerId: Joi.string().required(),
+  }),
+  query: Joi.object({
+    page: Joi.number().required(),
+    size: Joi.number().required(),
+  }),
+};
+
 const updateTrainer = {
   params: Joi.object({
     trainerId: Joi.string().required(),
@@ -26,4 +36,4 @@ const deleteTrainer = {
   }),
 };
 
-export { getTrainer, updateTrainer, deleteTrainer };
+export { getTrainer, getTrainerPokemons, updateTrainer, deleteTrainer };

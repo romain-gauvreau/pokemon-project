@@ -10,6 +10,10 @@ async function getPokemonById(id) {
   return Pokemon.findByPk(id);
 }
 
+async function getPaginatePokemonsByTrainerId(trainerId, limit, offset) {
+  return Pokemon.findAndCountAll({ where: { trainerId }, limit, offset });
+}
+
 async function createPokemon(pokemonBody) {
   return Pokemon.create(pokemonBody).catch((error) => {
     if (error.name === "SequelizeForeignKeyConstraintError") {
@@ -38,4 +42,5 @@ export {
   getPokemonById,
   deletePokemonById,
   updatePokemonById,
+  getPaginatePokemonsByTrainerId,
 };
