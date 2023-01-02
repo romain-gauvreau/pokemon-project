@@ -1,8 +1,12 @@
 import dotenv from "dotenv";
 import path from "path";
 
+const envFileName =
+  process.env.NODE_ENV === "production"
+    ? ".env"
+    : `.env.${process.env.NODE_ENV}`;
 dotenv.config({
-  path: path.resolve(".", `.env.${process.env.NODE_ENV}`),
+  path: path.resolve(".", envFileName),
 });
 
 const config = {
